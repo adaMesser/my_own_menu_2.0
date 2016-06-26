@@ -1,0 +1,91 @@
+<?php
+/**
+* @file
+* My own menu on toolbar.
+*/
+
+/**
+ * Implements hook_help().
+ *
+ * Displays help and module information.
+ *
+ * @param path
+ *   Which path of the site we're using to display help
+ * @param arg
+ *   Array that holds the current path as returned from arg() function
+ * @return string
+ *   String
+ */
+function my_menu_help($path, $arg) {
+  switch ($path) {
+    case "admin/help#my_menu":
+      return '' . t("This is my menu.") . '';
+      break;
+
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function my_menu_block_info() {
+  $blocks['my_menu'] = [
+    // The name that will appear in the block list.
+    'info' => t('My menu'),
+    // Default setting.
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  ];
+  return $blocks;
+}
+
+/**
+ * Implements hook_menu().
+ *
+ * A simple example which defines a page callback and a menu entry.
+ */
+/**
+ * Implements hook_menu().
+ */
+function my_menu_menu() {
+  $items['admin/first_item'] = array(
+    'title' => 'First Item',
+    'description' => 'First item in my test menu',
+    'page callback' => 'first_item_page',
+    'access callback' => TRUE,
+    'menu_name' => 'menu-test',
+    'expanded' => TRUE,
+  );
+  $items['admin/first_item/cat'] = array(
+    'title' => 'First Item Cat',
+    'description' => 'First item in my test menu cat',
+    'page callback' => 'first_cat_page',
+    'access callback' => TRUE,
+    'menu_name' => 'menu-test',
+    'expanded' => TRUE,
+  );
+  $items['admin/first_item/dog'] = array(
+    'title' => 'First Item DOG',
+    'description' => 'First item in my test menu dog',
+    'page callback' => 'first_dog_page',
+    'access callback' => TRUE,
+    'menu_name' => 'menu-test',
+    'expanded' => TRUE,
+  );
+  $items['admin/second_item'] = array(
+    'title' => 'Second Item',
+    'description' => 'Second item in my test menu',
+    'page callback' => 'first_item_page',
+    'access callback' => TRUE,
+    'menu_name' => 'menu-test',
+    'expanded' => TRUE,
+  );
+  $items['admin/second_item/cat'] = array(
+    'title' => 'Second Item Cat',
+    'description' => 'Second item cat in my test menu',
+    'page callback' => 'second_item_cat_page',
+    'access callback' => TRUE,
+    'menu_name' => 'menu-test',
+    'expanded' => TRUE,
+  );
+  return $items;
+}
