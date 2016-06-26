@@ -47,45 +47,92 @@ function my_menu_block_info() {
  * Implements hook_menu().
  */
 function my_menu_menu() {
-  $items['admin/first_item'] = [
-    'title' => 'First Item',
-    'description' => 'First item in my test menu',
-    'page callback' => 'first_item_page',
+  $items['admin/ads'] = [
+    'title' => 'Объявления',
+    'description' => 'Страница с объявлениями',
+    'page callback' => 'ads_page',
+    'file' => 'my_menu.inc',
+    'menu_name' => 'menu-test',
+    'expanded' => TRUE,
     'access callback' => TRUE,
+  ];
+  $items['admin/ads/buy'] = [
+    'title' => 'Куплю',
+    'description' => 'Страница с объявлениями о покупке',
+    'page callback' => 'buy_ads_page',
+    'access callback' => TRUE,
+    'file' => 'my_menu.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/first_item/cat'] = [
-    'title' => 'First Item Cat',
-    'description' => 'First item in my test menu cat',
-    'page callback' => 'first_cat_page',
+  $items['admin/ads/sell'] = [
+    'title' => 'Продам',
+    'description' => 'Страница с объявлениями о продаже',
+    'page callback' => 'sell_ads_page',
     'access callback' => TRUE,
+    'file' => 'my_menu.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/first_item/dog'] = [
-    'title' => 'First Item DOG',
-    'description' => 'First item in my test menu dog',
-    'page callback' => 'first_dog_page',
+  $items['admin/ads/add'] = [
+    'title' => 'Добавить объявление',
+    'description' => 'Добавление объявления',
+    'page callback' => 'add_ads_page',
+    'file' => 'my_menu.inc',
+    'menu_name' => 'menu-test',
+    'access arguments' => array('authenticated user'),
+    'expanded' => TRUE,
+  ];
+  $items['admin/catalogue'] = [
+    'title' => 'Каталог',
+    'description' => 'Каталог услуг',
+    'page callback' => 'catalogue_page',
+    'file' => 'my_menu.inc',
+    'menu_name' => 'menu-test',
+    'access arguments' => array('access to adding ads'),
+    'expanded' => TRUE,
+  ];
+  $items['admin/catalogue/dealership'] = [
+    'title' => 'Автосалоны',
+    'description' => 'Каталог автосалонов',
+    'page callback' => 'catalogue_dealership_page',
     'access callback' => TRUE,
+    'file' => 'my_menu.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/second_item'] = [
-    'title' => 'Second Item',
-    'description' => 'Second item in my test menu',
-    'page callback' => 'first_item_page',
+  $items['admin/catalogue/shop'] = [
+    'title' => 'Магазины',
+    'description' => 'Каталог магазинов',
+    'page callback' => 'catalogue_shop_page',
     'access callback' => TRUE,
+    'file' => 'my_menu.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/second_item/cat'] = [
-    'title' => 'Second Item Cat',
-    'description' => 'Second item cat in my test menu',
-    'page callback' => 'second_item_cat_page',
-    'access callback' => TRUE,
+  $items['admin/review'] = [
+    'title' => 'Добавить отзыв',
+    'description' => 'Добавить отзыв о сервисе',
+    'page callback' => 'review_page',
+    'file' => 'my_menu.inc',
     'menu_name' => 'menu-test',
+    'access arguments' => array('authenticated user'),
     'expanded' => TRUE,
   ];
   return $items;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ * Provides a demonstration access string.
+ */
+function my_menu_permission() {
+  return array(
+    'access to adding ads' => array(
+      'title' => t('Access to adding ads'),
+      'description' => t('Perform administration tasks for my module.'),
+    ),
+  );
+
 }
