@@ -1,6 +1,7 @@
 <?php
 
 /**
+ *
  * @file
  * API for handling file uploads and server file management.
  */
@@ -28,6 +29,7 @@ function catalogue_page() {
 function catalogue_dealership_page() {
   return t("Каталог автосалонов");
 }
+
 
 function catalogue_shop_page() {
   return t("Каталог автомагазинов");
