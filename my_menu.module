@@ -47,8 +47,8 @@ function my_menu_block_info() {
  * Implements hook_menu().
  *
  * A simple example which defines a page callback and a menu entry.
- * 
- * @return 
+ *
+ * @return
  *    items
  */
 
@@ -56,8 +56,8 @@ function my_menu_menu() {
   $items['admin/ads'] = [
     'title' => 'Объявления',
     'description' => 'Страница с объявлениями',
-    'page callback' => 'ads_page',
-    'file' => 'my_menu.inc',
+    'page callback' => 'my_menu_ads_page',
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
     'access callback' => TRUE,
@@ -65,64 +65,64 @@ function my_menu_menu() {
   $items['admin/ads/buy'] = [
     'title' => 'Куплю',
     'description' => 'Страница с объявлениями о покупке',
-    'page callback' => 'buy_ads_page',
+    'page callback' => 'my_menu_buy_ads_page',
     'access callback' => TRUE,
-    'file' => 'my_menu.inc',
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
   $items['admin/ads/sell'] = [
     'title' => 'Продам',
     'description' => 'Страница с объявлениями о продаже',
-    'page callback' => 'sell_ads_page',
+    'page callback' => 'my_menu_sell_ads_page',
     'access callback' => TRUE,
-    'file' => 'my_menu.inc',
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
   $items['admin/ads/add'] = [
     'title' => 'Добавить объявление',
     'description' => 'Добавление объявления',
-    'page callback' => 'add_ads_page',
-    'file' => 'my_menu.inc',
+    'page callback' => 'my_menu_add_ads_page',
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
-    'access arguments' => array('authenticated user'),
+    'access arguments' => array('access to ads'),
     'expanded' => TRUE,
   ];
   $items['admin/catalogue'] = [
     'title' => 'Каталог',
     'description' => 'Каталог услуг',
-    'page callback' => 'catalogue_page',
-    'file' => 'my_menu.inc',
+    'page callback' => 'my_menu_catalogue_page',
+    'access callback' => TRUE,
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
-    'access arguments' => array('access to adding ads'),
     'expanded' => TRUE,
   ];
   $items['admin/catalogue/dealership'] = [
     'title' => 'Автосалоны',
     'description' => 'Каталог автосалонов',
-    'page callback' => 'catalogue_dealership_page',
+    'page callback' => 'my_menu_catalogue_dealership_page',
     'access callback' => TRUE,
-    'file' => 'my_menu.inc',
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
   $items['admin/catalogue/shop'] = [
     'title' => 'Магазины',
     'description' => 'Каталог магазинов',
-    'page callback' => 'catalogue_shop_page',
+    'page callback' => 'my_menu_catalogue_shop_page',
     'access callback' => TRUE,
-    'file' => 'my_menu.inc',
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
   $items['admin/review'] = [
     'title' => 'Добавить отзыв',
     'description' => 'Добавить отзыв о сервисе',
-    'page callback' => 'review_page',
-    'file' => 'my_menu.inc',
+    'page callback' => 'my_menu_review_page',
+    'file' => 'my_menu.pages.inc',
     'menu_name' => 'menu-test',
-    'access arguments' => array('authenticated user'),
+    'access arguments' => array('access to reviews'),
     'expanded' => TRUE,
   ];
   return $items;
@@ -135,8 +135,12 @@ function my_menu_menu() {
  */
 function my_menu_permission() {
   return array(
-    'access to adding ads' => array(
+    'access to ads' => array(
       'title' => t('Access to adding ads'),
+      'description' => t('Perform administration tasks for my module.'),
+    ),
+    'access to reviews' => array(
+      'title' => t('Access to adding reviews'),
       'description' => t('Perform administration tasks for my module.'),
     ),
   );
