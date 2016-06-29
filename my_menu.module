@@ -53,7 +53,7 @@ function my_menu_block_info() {
  */
 
 function my_menu_menu() {
-  $items['admin/ads'] = [
+  $items['ads'] = [
     'title' => 'Объявления',
     'description' => 'Страница с объявлениями',
     'page callback' => 'my_menu_ads_page',
@@ -62,7 +62,7 @@ function my_menu_menu() {
     'expanded' => TRUE,
     'access callback' => TRUE,
   ];
-  $items['admin/ads/buy'] = [
+  $items['ads/buy'] = [
     'title' => 'Куплю',
     'description' => 'Страница с объявлениями о покупке',
     'page callback' => 'my_menu_buy_ads_page',
@@ -71,7 +71,7 @@ function my_menu_menu() {
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/ads/sell'] = [
+  $items['ads/sell'] = [
     'title' => 'Продам',
     'description' => 'Страница с объявлениями о продаже',
     'page callback' => 'my_menu_sell_ads_page',
@@ -80,7 +80,7 @@ function my_menu_menu() {
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/ads/add'] = [
+  $items['ads/add'] = [
     'title' => 'Добавить объявление',
     'description' => 'Добавление объявления',
     'page callback' => 'my_menu_add_ads_page',
@@ -89,7 +89,7 @@ function my_menu_menu() {
     'access arguments' => array('access to ads'),
     'expanded' => TRUE,
   ];
-  $items['admin/catalogue'] = [
+  $items['catalogue'] = [
     'title' => 'Каталог',
     'description' => 'Каталог услуг',
     'page callback' => 'my_menu_catalogue_page',
@@ -98,7 +98,7 @@ function my_menu_menu() {
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/catalogue/dealership'] = [
+  $items['catalogue/dealership'] = [
     'title' => 'Автосалоны',
     'description' => 'Каталог автосалонов',
     'page callback' => 'my_menu_catalogue_dealership_page',
@@ -107,7 +107,7 @@ function my_menu_menu() {
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/catalogue/shop'] = [
+  $items['catalogue/shop'] = [
     'title' => 'Магазины',
     'description' => 'Каталог магазинов',
     'page callback' => 'my_menu_catalogue_shop_page',
@@ -116,7 +116,7 @@ function my_menu_menu() {
     'menu_name' => 'menu-test',
     'expanded' => TRUE,
   ];
-  $items['admin/review'] = [
+  $items['review'] = [
     'title' => 'Добавить отзыв',
     'description' => 'Добавить отзыв о сервисе',
     'page callback' => 'my_menu_review_page',
@@ -125,6 +125,57 @@ function my_menu_menu() {
     'access arguments' => array('access to reviews'),
     'expanded' => TRUE,
   ];
+  $items['test_item'] = [
+    'title' => 'Test Item',
+    'description' => 'This is test item',
+    'page callback' => 'my_menu_test_item_page',
+    'file' => 'my_menu.pages.inc',
+    'menu_name' => 'menu-test',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  ];
+
+  $items['tab_item'] = array(
+    'title' => 'Страница с табами',
+    'page callback' => 'my_menu_tab_item_page',
+    'access callback' => TRUE,
+    'menu_name' => 'menu-test',
+    'file' => 'my_menu.pages.inc',
+    'expanded' => TRUE,
+  );
+  $items['tab_item/first_tab'] = array(
+    'title' => 'Первый таб',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'access callback' => TRUE,
+    'weight' => -10,
+    'file' => 'my_menu.pages.inc',
+  );
+  $items['tab_item/second_tab'] = array(
+    'title' => 'Второй таб',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'my_menu_tab_item_second_page',
+    'file' => 'my_menu.pages.inc',
+    'access callback' => TRUE,
+  );
+
+  $items['node/27'] = array(
+    'title callback' => 'node_page_title_from_nid',
+    'title arguments' => array(1),
+    'page callback' => 'my_menu_node_item',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'file' => 'my_menu.pages.inc',
+    'menu_name' => 'menu-test',
+  );
+
+  $items['items_collection'] = array(
+    'title' => 'items collection',
+    'page callback' => 'my_menu_items_collection_page',
+    'access callback' => TRUE,
+    'file' => 'my_menu.pages.inc',
+    'menu_name' => 'menu-test'
+  );
+
   return $items;
 }
 
@@ -144,4 +195,21 @@ function my_menu_permission() {
       'description' => t('Perform administration tasks for my module.'),
     ),
   );
+}
+
+/**
+ * @param $items
+ */
+
+function my_menu_menu_alter(&$items) {
+  if (!empty($items['test_item']))
+  {
+    $items['test_item_new'] = $items['test_item'];
+    $items['test_item_new']['title'] = 'Altered item';
+    unset($items['test_item']);
+  }
+  if (!empty($items['test_item_new'])) {
+    $items['test_item_new']['page callback'] = 'my_menu_test_altered_page';
+  }
+
 }

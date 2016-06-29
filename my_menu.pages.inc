@@ -70,10 +70,65 @@ function my_menu_catalogue_shop_page() {
 }
 
 /**
- * Page callback for review page.
- *
- * @return string
+ * @return mixed
  */
 function my_menu_review_page() {
   return t("Добавить отзыв");
+}
+
+/**
+ * @return mixed
+ */
+function my_menu_test_item_page() {
+  return t("This is test item");
+}
+
+/**
+ * @return mixed
+ */
+function my_menu_test_altered_page() {
+  return t("This is altered test item");
+}
+/**
+ * @return mixed
+ */
+function my_menu_tab_item_page() {
+  return t("Страница с табами");
+}
+
+/**
+ * @return mixed
+ */
+function my_menu_tab_item_second_page() {
+  return t("Второй таб");
+}
+
+/**
+ * @return mixed
+ */
+function my_menu_node_item($nid) {
+  $node = node_load($nid); 
+  return t("Эта страница называется ".$node->title.
+    ", и доступна по адресу http://localhost/drupal/node/".$nid);
+}
+
+/**
+ * @param $nid
+ * @return mixed
+ */
+function node_page_title_from_nid($nid) {
+  $node = node_load($nid);
+  return $node->title;
+}
+
+function my_menu_items_collection_page(){
+  $names = module_implements("menu");
+  $res='';
+  
+  foreach ($names as $value) {
+    $res = $res . $value . "<br/>";
+    module_invoke($value, "menu");
+
+  }
+  return t($res);
 }
