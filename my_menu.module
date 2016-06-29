@@ -217,7 +217,7 @@ function my_menu_menu_alter(&$items) {
  * @return string
  */
 function my_menu_items_collector() {
-  $names = module_implements("menu");
+  $names = module_implements('menu');
   $res = '';
   foreach ($names as $value) {
     $res = $res . t("<b>") . $value . t("</b><br/>");
@@ -230,9 +230,9 @@ function my_menu_items_collector() {
         $item_name = $key;
       }
       $item_link = $key;
-      $res = $res . t("<a href='") . $item_link . t("'> ") . $item_name . t('</a><br/>');
+      $res = $res . l($item_name, $item_link)  . t('<br/>');
     }
-    $res = $res . t('<br>');
+    $res = $res . t('<br/>');
   }
   return $res;
 }
