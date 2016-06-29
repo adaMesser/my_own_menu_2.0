@@ -121,14 +121,28 @@ function node_page_title_from_nid($nid) {
   return $node->title;
 }
 
+/**
+ * @return mixed
+ */
 function my_menu_items_collection_page(){
+  
   $names = module_implements("menu");
   $res='';
-  
-  foreach ($names as $value) {
-    $res = $res . $value . "<br/>";
-    module_invoke($value, "menu");
 
+  foreach ($names as $value) {
+    $res = $res . t("<b>"). $value . t("</b><br/>");
+    $items = module_invoke($value, 'menu');
+    foreach ($items as $key => $val) {
+      if (!empty($items[$key]['title'])) {
+        $item_name = $items[$key]['title'];
+      } else {
+        $item_name = $key;
+      }
+      $item_link = $key;
+
+      $res = $res . t("<a href='") . $item_link . t("'> ") .$item_name . t('</a><br/>');
+    }
+    $res = $res . t('<br>');
   }
   return t($res);
 }
