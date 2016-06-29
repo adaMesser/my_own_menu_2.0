@@ -89,6 +89,7 @@ function my_menu_test_item_page() {
 function my_menu_test_altered_page() {
   return t("This is altered test item");
 }
+
 /**
  * @return mixed
  */
@@ -107,9 +108,9 @@ function my_menu_tab_item_second_page() {
  * @return mixed
  */
 function my_menu_node_item($nid) {
-  $node = node_load($nid); 
-  return t("Эта страница называется ".$node->title.
-    ", и доступна по адресу http://localhost/drupal/node/".$nid);
+  $node = node_load($nid);
+  return t("Эта страница называется " . $node->title .
+    ", и доступна по адресу http://localhost/drupal/node/" . $nid);
 }
 
 /**
@@ -124,25 +125,7 @@ function node_page_title_from_nid($nid) {
 /**
  * @return mixed
  */
-function my_menu_items_collection_page(){
-  
-  $names = module_implements("menu");
-  $res='';
-
-  foreach ($names as $value) {
-    $res = $res . t("<b>"). $value . t("</b><br/>");
-    $items = module_invoke($value, 'menu');
-    foreach ($items as $key => $val) {
-      if (!empty($items[$key]['title'])) {
-        $item_name = $items[$key]['title'];
-      } else {
-        $item_name = $key;
-      }
-      $item_link = $key;
-
-      $res = $res . t("<a href='") . $item_link . t("'> ") .$item_name . t('</a><br/>');
-    }
-    $res = $res . t('<br>');
-  }
+function my_menu_items_collection_page() {
+  $res = my_menu_items_collector();
   return t($res);
 }
