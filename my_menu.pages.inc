@@ -107,18 +107,17 @@ function my_menu_tab_item_second_page() {
 /**
  * @return mixed
  */
-function my_menu_node_item($nid) {
-  $node = node_load($nid);
+function my_menu_node_item($node) {
+
   return t("Эта страница называется " . $node->title .
-    ", и доступна по адресу http://localhost/drupal/node/" . $nid);
+    ", и доступна по адресу http://localhost/drupal/node/" . $node->nid);
 }
 
 /**
  * @param $nid
  * @return mixed
  */
-function node_page_title_from_nid($nid) {
-  $node = node_load($nid);
+function node_page_title_from_nid($node) {
   return $node->title;
 }
 

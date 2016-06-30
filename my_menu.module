@@ -158,14 +158,15 @@ function my_menu_menu() {
     'access callback' => TRUE,
   );
 
-  $items['node/27'] = array(
+  $items['node/%node/short'] = array(
     'title callback' => 'node_page_title_from_nid',
+    'title' => 'Short',
     'title arguments' => array(1),
     'page callback' => 'my_menu_node_item',
     'page arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
     'access callback' => TRUE,
     'file' => 'my_menu.pages.inc',
-    'menu_name' => 'menu-test',
   );
 
   $items['items_collection'] = array(
@@ -210,9 +211,33 @@ function my_menu_menu_alter(&$items) {
   if (!empty($items['test_item_new'])) {
     $items['test_item_new']['page callback'] = 'my_menu_test_altered_page';
   }
-
+  foreach ($items as $route => $item) {
+    $result = module_invoke_all('my_menu_menu', $route, $item);
+    drupal_alter('my_menu_menu', $result, $route, $item);
+    foreach ($result as $subroute => $subitem) {
+      $items[$route . '/' . $subroute] = $subitem;
+    }
+  }
 }
 
+/**
+ * Implements hook_my_menu_menu().
+ */
+function my_menu_my_menu_menu($route, $item) {
+  $subitems = array();
+  if ($route == 'catalogue') {
+    $subitems['shop1'] = [
+      'title' => 'Shop 1',
+      'description' => 'Каталог магазинов',
+      'page callback' => 'my_menu_catalogue_shop_page',
+      'access callback' => TRUE,
+      'file' => 'my_menu.pages.inc',
+      'menu_name' => 'menu-test',
+      'expanded' => TRUE,
+    ];
+  }
+  return $subitems;
+}
 /**
  * @return string
  */
